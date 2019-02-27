@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const StyledFriends = styled.div`
   width: 50vw;
@@ -69,3 +70,7 @@ export default class Friends extends React.Component {
     );
   }
 }
+
+Friends.propTypes = {
+  friends: PropTypes.array
+};

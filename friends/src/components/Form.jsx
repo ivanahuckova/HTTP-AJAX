@@ -24,7 +24,7 @@ const StyledFrom = styled.div`
 export default function Form() {
   return (
     <StyledFrom>
-      <form>
+      <form action="" method="post">
         Name: <input type="text" />
         Age: <input type="number" />
         Email: <input type="email" />
