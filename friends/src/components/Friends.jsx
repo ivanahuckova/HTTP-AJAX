@@ -17,11 +17,18 @@ const StyledFriends = styled.div`
 
 const StyledFriend = styled.div`
   border-radius: 10px;
-  background: linear-gradient(to right, #5d26c1, #a17fe0, #59c173);
+  background: #ff9966;
+  background: linear-gradient(to right, #ff5e62, #ff9966);
+
   color: white;
   padding: 10px;
   margin: 10px;
   width: 20vw;
+`;
+
+const StyledMessage = styled.div`
+  color: white;
+  margin-top: 30px;
 `;
 
 export default class Friends extends React.Component {
@@ -36,40 +43,63 @@ export default class Friends extends React.Component {
   }
 
   fetchFriends = () => {
+    this.startSpinner();
     axios
       .get('http://localhost:5000/friends')
       .then(res => this.addFriends(res.data))
       .catch(res => this.addError(res.message));
   };
   addFriends = friends => {
+    this.stopSpinner();
     this.setState({ friends: friends });
   };
 
   addError = error => {
+    this.stopSpinner();
     this.setState({ error: error });
   };
 
-  render() {
-    console.log(this.state.friends);
-    return (
-      <div>
-        <StyledFriends>
-          {this.state.friends &&
-            this.state.friends.map(friend => {
-              return (
-                <StyledFriend key={friend.name}>
-                  <div>Name: {friend.name}</div>
-                  <div>Age: {friend.age}</div>
-                  <div>Email: {friend.email}</div>
-                </StyledFriend>
-              );
-            })}
+  startSpinner = () => {
+    this.setState({ loading: true });
+  };
 
-          {/*If no friends are loaded:*/}
-          {!this.state.friends && <div>Loading friends...</div>}
+  stopSpinner = () => {
+    this.setState({ loading: false });
+  };
+
+  render() {
+    if (this.state.loading) {
+      return <div>Loading...</div>;
+    }
+
+    console.log(this.state.friends);
+    if (this.state.loading) {
+      return <StyledMessage>Loading friends...</StyledMessage>;
+    }
+
+    if (this.state.error) {
+      return <StyledMessage>Error while loading friends occured...</StyledMessage>;
+    }
+
+    if (this.state.friends) {
+      return (
+        <StyledFriends>
+          {this.state.friends.map(friend => {
+            return (
+              <StyledFriend key={friend.name}>
+                <div>Name: {friend.name}</div>
+                <div>Age: {friend.age}</div>
+                <div>Email: {friend.email}</div>
+              </StyledFriend>
+            );
+          })}
         </StyledFriends>
-      </div>
-    );
+      );
+    }
+
+    if (!this.state.friends) {
+      return <div />;
+    }
   }
 }
 

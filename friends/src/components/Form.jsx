@@ -13,8 +13,8 @@ const StyledFrom = styled.div`
     }
   }
   .submit-button {
-    color: white;
-    background-color: #59c173;
+    background-color: white;
+    color: #ff9966;
     cursor: pointer;
     font-size: 1rem;
     padding: 0 20px;
