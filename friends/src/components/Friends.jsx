@@ -11,6 +11,7 @@ const StyledFriends = styled.div`
   flex-wrap: wrap;
   justify-content: space-evenly;
   padding: 10px;
+  margin-top: 30px;
 `;
 
 const StyledFriend = styled.div`
