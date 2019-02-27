@@ -64,6 +64,8 @@ export default class Friends extends React.Component {
                 </StyledFriend>
               );
             })}
+
+          {/*If no friends are loaded:*/}
           {!this.state.friends && <div>Loading friends...</div>}
         </StyledFriends>
       </div>
@@ -72,5 +74,10 @@ export default class Friends extends React.Component {
 }
 
 Friends.propTypes = {
-  friends: PropTypes.array
+  friends: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    age: PropTypes.number,
+    email: PropTypes.string
+  })
 };
