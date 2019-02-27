@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import Friends from './components/Friends';
 import Form from './components/Form';
+import Message from './components/Message';
 
 const StyledEnvContainer = styled.div`
   width: 100vw;
@@ -16,14 +17,6 @@ const StyledEnvContainer = styled.div`
   align-items: center;
   flex-direction: column;
   font-family: Arial, Helvetica, sans-serif;
-`;
-
-const StyledMessage = styled.div`
-  width: 100vw;
-  padding-top: 10%;
-  text-align: center;
-  font-size: 1.3rem;
-  color: white;
 `;
 
 class App extends Component {
@@ -40,18 +33,18 @@ class App extends Component {
   fetchFriends = () => {
     this.startLoader();
     axios
-      .get('http://localhost:5000/friend')
-      .then(res => this.addFriends(res.data))
-      .catch(this.addError);
+      .get('http://localhost:5000/friends')
+      .then(res => this.setFriends(res.data))
+      .catch(res => this.setError(res.message));
   };
-  addFriends = friends => {
+  setFriends = friends => {
     this.stopLoader();
     this.setState({ friends: friends });
   };
 
-  addError = error => {
+  setError = error => {
     this.stopLoader();
-    this.setState({ erro: error });
+    this.setState({ error: error });
   };
 
   startLoader = () => {
@@ -62,30 +55,9 @@ class App extends Component {
     this.setState({ loading: false });
   };
   render() {
-    if (this.state.loading) {
-      return (
-        <StyledMessage>
-          <span role="img" aria-label="hand">
-            👋
-          </span>{' '}
-          Loading your friends
-        </StyledMessage>
-      );
-    }
-
-    if (this.state.error) {
-      return (
-        <StyledMessage>
-          <span role="img" aria-label="hand">
-            ☹️
-          </span>{' '}
-          Something went wrong. Try to refresh the page.
-        </StyledMessage>
-      );
-    }
-
     return (
       <StyledEnvContainer>
+        <Message error={this.state.error} loading={this.state.loading} />
         <Form />
         <Friends friends={this.state.friends} />
       </StyledEnvContainer>
