@@ -16,7 +16,9 @@ export default function Message(props) {
         <span role="img" aria-label="hand">
           😢
         </span>{' '}
-        Something went wrong. Try to refresh the page.
+        Something went wrong and I am not able to load your friends.
+        <br />
+        Try to refresh the page.
       </StyledMessage>
     );
   }

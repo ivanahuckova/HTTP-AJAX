@@ -49,10 +49,5 @@ export default function Friends(props) {
 }
 
 Friends.propTypes = {
-  friends: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    age: PropTypes.number,
-    email: PropTypes.string
-  })
+  friends: PropTypes.array
 };

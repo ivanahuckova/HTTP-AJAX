@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import styled from 'styled-components';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 import Friends from './components/Friends';
 import Form from './components/Form';
@@ -9,7 +10,7 @@ import Message from './components/Message';
 
 const StyledEnvContainer = styled.div`
   width: 100vw;
-  height: 100vh;
+  padding-bottom: 50px;
   background: #ff9966;
   background: linear-gradient(to right, #ff5e62, #ff9966);
   display: flex;
@@ -64,5 +65,14 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  friends: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    age: PropTypes.number,
+    email: PropTypes.string
+  })
+};
 
 export default App;
