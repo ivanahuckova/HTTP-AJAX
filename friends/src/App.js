@@ -5,7 +5,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 
 import Friends from './components/Friends';
-import Form from './components/Form';
+import AddForm from './components/AddForm';
 import Message from './components/Message';
 
 const StyledEnvContainer = styled.div`
@@ -34,6 +34,8 @@ class App extends Component {
     this.fetchFriends();
   }
 
+  //GET/POST/UPDATE/DELETE REQUESTS
+
   fetchFriends = () => {
     this.startLoader();
     axios
@@ -52,6 +54,7 @@ class App extends Component {
       .finally(this.stopLoader);
   };
 
+  //SETTING OF STATE
   setFriends = friends => {
     this.setState({ friends: friends });
   };
@@ -71,7 +74,7 @@ class App extends Component {
     return (
       <StyledEnvContainer>
         <Message error={this.state.error} loading={this.state.loading} />
-        <Form postFriends={this.postFriends} />
+        <AddForm postFriends={this.postFriends} />
         <Friends friends={this.state.friends} />
       </StyledEnvContainer>
     );
