@@ -46,7 +46,7 @@ export default class UpdateFrom extends React.Component {
         <br />
         Email: <input type="email" defaultValue={this.props.friend.email} ref={this.inputRefEmail} />
         <br />
-        Favorite: <input type="checkbox" ref={input => (this.inputFavorite = input)} />
+        Favorite: <input type="checkbox" defaultChecked={this.props.friend.favorite} ref={input => (this.inputFavorite = input)} />
         <br />
         {/* BUTTON TO SUBMIT THE CHANGE*/}
         <input
