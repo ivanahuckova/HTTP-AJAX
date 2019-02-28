@@ -27,7 +27,8 @@ class App extends Component {
   state = {
     friends: null,
     error: null,
-    loading: false
+    loading: false,
+    message: null
   };
 
   componentDidMount() {
@@ -37,6 +38,7 @@ class App extends Component {
   //GET/POST/UPDATE/DELETE REQUESTS
 
   fetchFriends = () => {
+    this.resetError();
     this.startLoader();
     axios
       .get(friendsURL)
@@ -46,12 +48,32 @@ class App extends Component {
   };
 
   postFriends = (name, age, email) => {
+    this.resetError();
     this.startLoader();
     axios
       .post(friendsURL, { name, age, email })
       .then(res => this.setFriends(res.data))
       .catch(res => this.setError(res.message))
       .finally(this.stopLoader);
+  };
+
+  putFriends = (id, name, age, email) => {
+    this.resetError();
+    this.startLoader();
+    axios
+      .put(`${friendsURL}/${id}`, { name, age, email })
+      .then(res => this.setFriends(res.data))
+      .catch(res => this.setError(res.message))
+      .finally(this.stopLoader);
+  };
+
+  deleteFriends = id => {
+    this.resetError();
+    this.startLoader();
+    axios
+      .delete(`${friendsURL}/${id}`)
+      .then(this.stopLoader)
+      .finally(this.fetchFriends);
   };
 
   //SETTING OF STATE
@@ -61,6 +83,14 @@ class App extends Component {
 
   setError = error => {
     this.setState({ error: error });
+  };
+
+  resetError = () => {
+    this.setState({ error: null });
+  };
+
+  setMessage = message => {
+    this.setState({ message: message });
   };
 
   startLoader = () => {
@@ -75,7 +105,7 @@ class App extends Component {
       <StyledEnvContainer>
         <Message error={this.state.error} loading={this.state.loading} />
         <AddForm postFriends={this.postFriends} />
-        <Friends friends={this.state.friends} />
+        <Friends friends={this.state.friends} putFriends={this.putFriends} deleteFriends={this.deleteFriends} />
       </StyledEnvContainer>
     );
   }

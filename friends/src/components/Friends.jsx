@@ -58,6 +58,10 @@ export default class Friends extends React.Component {
     });
   };
 
+  inputRefName = React.createRef();
+  inputRefAge = React.createRef();
+  inputRefEmail = React.createRef();
+
   render() {
     return (
       this.props.friends && (
@@ -68,19 +72,38 @@ export default class Friends extends React.Component {
                 <div className="name">{friend.name}</div>
                 <div>Age: {friend.age}</div>
                 <div>Email: {friend.email}</div>
-                <button className="action-button">Delete</button>
+                <button
+                  onClick={event => {
+                    this.props.deleteFriends(friend.id);
+                  }}
+                  className="action-button">
+                  Delete
+                </button>
                 <button onClick={() => this.showForm(true, friend.id)} className="action-button">
                   Update
                 </button>
                 {this.state.showMessage && friend.id === this.state.friendIdToShowForm && (
                   <form>
-                    Name: <input type="text" />
+                    Name: <input type="text" placeholder={friend.name} ref={this.inputRefName} />
                     <br />
-                    Age: <input type="number" />
+                    Age: <input type="number" placeholder={friend.age} ref={this.inputRefAge} />
                     <br />
-                    Email: <input type="email" />
+                    Email: <input type="email" placeholder={friend.email} ref={this.inputRefEmail} />
                     <br />
-                    <input className="submit-button" type="submit" />
+                    <input
+                      className="submit-button"
+                      type="submit"
+                      onClick={event => {
+                        event.preventDefault();
+                        const id = friend.id;
+                        const name = this.inputRefName.current.value;
+                        const age = this.inputRefAge.current.value;
+                        const email = this.inputRefEmail.current.value;
+
+                        this.props.putFriends(id, name, age, email);
+                        this.showForm(false, friend.id);
+                      }}
+                    />
                   </form>
                 )}
               </StyledFriend>
