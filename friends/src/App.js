@@ -52,21 +52,22 @@ export default class App extends Component {
       .finally(this.stopLoader);
   };
 
-  postFriends = (name, age, email) => {
+  postFriends = (name, age, email, favorite) => {
     this.resetError();
     this.startLoader();
     axios
-      .post(friendsURL, { name, age, email })
+      .post(friendsURL, { name, age, email, favorite })
       .then(res => this.setFriends(res.data))
       .catch(res => this.setError(res.message))
+      .catch(res => console.log(res.message))
       .finally(this.stopLoader);
   };
 
-  putFriends = (id, name, age, email) => {
+  putFriends = (id, name, age, email, favorite) => {
     this.resetError();
     this.startLoader();
     axios
-      .put(`${friendsURL}/${id}`, { name, age, email })
+      .put(`${friendsURL}/${id}`, { name, age, email, favorite })
       .then(res => this.setFriends(res.data))
       .catch(res => this.setError(res.message))
       .finally(this.stopLoader);
@@ -124,6 +125,7 @@ App.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string,
     age: PropTypes.number,
-    email: PropTypes.string
+    email: PropTypes.string,
+    favorite: PropTypes.bool
   })
 };

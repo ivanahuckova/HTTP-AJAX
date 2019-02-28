@@ -34,6 +34,7 @@ export default class AddForm extends React.Component {
   inputRefName = React.createRef();
   inputRefAge = React.createRef();
   inputRefEmail = React.createRef();
+  inputFavorite = React.createRef();
 
   clearInput = () => {
     this.inputRefName.current.value = '';
@@ -49,6 +50,13 @@ export default class AddForm extends React.Component {
           Name: <input type="text" ref={this.inputRefName} />
           Age: <input type="number" ref={this.inputRefAge} />
           Email: <input type="email" ref={this.inputRefEmail} />
+          Favorite:{' '}
+          <input
+            type="checkbox"
+            ref={input => {
+              this.inputFavorite = input;
+            }}
+          />
           {/*BUTTON TO ADD NEW FRIEND*/}
           <input
             className="submit-button"
@@ -57,7 +65,8 @@ export default class AddForm extends React.Component {
               const name = this.inputRefName.current.value;
               const age = this.inputRefAge.current.value;
               const email = this.inputRefEmail.current.value;
-              this.props.postFriends(name, age, email);
+              const favortie = this.inputFavorite.checked;
+              this.props.postFriends(name, age, email, favortie);
               this.clearInput();
             }}
             type="submit"

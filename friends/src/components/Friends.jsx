@@ -26,6 +26,11 @@ const StyledFriend = styled.div`
   padding: 10px;
   margin: 10px;
   width: 35vw;
+  font-weight: bold;
+
+  div {
+    padding: 5px 0;
+  }
 
   .name {
     font-size: 1.3rem;
@@ -68,6 +73,7 @@ export default class Friends extends React.Component {
   inputRefName = React.createRef();
   inputRefAge = React.createRef();
   inputRefEmail = React.createRef();
+  checkRefFavorite = React.createRef();
 
   //RENDER
   render() {
@@ -80,7 +86,14 @@ export default class Friends extends React.Component {
                 <div className="name">{friend.name}</div>
                 <div>Age: {friend.age}</div>
                 <div>Email: {friend.email}</div>
-
+                {friend.favorite && (
+                  <div>
+                    <span role="img" aria-label="heart emoji">
+                      💛
+                    </span>
+                    Friend
+                  </div>
+                )}
                 {/*DELETE BUTTON - DELETE ON  CLICK*/}
                 <button
                   onClick={event => {
@@ -89,7 +102,6 @@ export default class Friends extends React.Component {
                   className="action-button">
                   Delete
                 </button>
-
                 {/*UPDATE BUTTON - IF CLICKED, UPDATE FORM APPEARS*/}
                 <button onClick={() => this.showForm(true, friend.id)} className="action-button">
                   Update

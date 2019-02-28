@@ -20,7 +20,7 @@ const StyledUpdateForm = styled.form`
     &:last-child {
       text-align: center;
       font-weight: bold;
-      padding: 1px 10px;
+      padding: 3px 10px;
       cursor: pointer;
       background-color: #ff9966;
       color: white;
@@ -34,6 +34,7 @@ export default class UpdateFrom extends React.Component {
   inputRefName = React.createRef();
   inputRefAge = React.createRef();
   inputRefEmail = React.createRef();
+  inputFavorite = React.createRef();
 
   //RENDER
   render() {
@@ -45,6 +46,8 @@ export default class UpdateFrom extends React.Component {
         <br />
         Email: <input type="email" defaultValue={this.props.friend.email} ref={this.inputRefEmail} />
         <br />
+        Favorite: <input type="checkbox" ref={input => (this.inputFavorite = input)} />
+        <br />
         {/* BUTTON TO SUBMIT THE CHANGE*/}
         <input
           className="submit-button"
@@ -55,8 +58,9 @@ export default class UpdateFrom extends React.Component {
             const name = this.inputRefName.current.value;
             const age = this.inputRefAge.current.value;
             const email = this.inputRefEmail.current.value;
+            const favorite = this.inputFavorite.checked;
 
-            this.props.putFriends(id, name, age, email);
+            this.props.putFriends(id, name, age, email, favorite);
             //FORM WILL BE HIDDEN AGAIN
             this.props.showForm(false, this.props.friend.id);
           }}

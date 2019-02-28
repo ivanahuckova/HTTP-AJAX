@@ -13,10 +13,10 @@ export default function Message(props) {
   if (props.error) {
     return (
       <StyledMessage>
-        <span role="img" aria-label="hand">
+        <span role="img" aria-label="crying emoji">
           😢
         </span>{' '}
-        Something went wrong and I am not able to load your friends.
+        Something went wrong.
         <br />
         Try to refresh the page.
       </StyledMessage>
