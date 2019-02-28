@@ -10,7 +10,8 @@ import Message from './components/Message';
 
 const StyledEnvContainer = styled.div`
   width: 100vw;
-  padding-bottom: 50px;
+  min-height: 100vh;
+  padding-bottom: 20px;
   background: #ff9966;
   background: linear-gradient(to right, #ff5e62, #ff9966);
   display: flex;
@@ -19,6 +20,8 @@ const StyledEnvContainer = styled.div`
   flex-direction: column;
   font-family: Arial, Helvetica, sans-serif;
 `;
+
+const friendsURL = 'http://localhost:5000/friends';
 
 class App extends Component {
   state = {
@@ -34,17 +37,26 @@ class App extends Component {
   fetchFriends = () => {
     this.startLoader();
     axios
-      .get('http://localhost:5000/friends')
+      .get(friendsURL)
       .then(res => this.setFriends(res.data))
-      .catch(res => this.setError(res.message));
+      .catch(res => this.setError(res.message))
+      .finally(this.stopLoader);
   };
+
+  postFriends = (name, age, email) => {
+    this.startLoader();
+    axios
+      .post(friendsURL, { name, age, email })
+      .then(res => this.setFriends(res.data))
+      .catch(res => this.setError(res.message))
+      .finally(this.stopLoader);
+  };
+
   setFriends = friends => {
-    this.stopLoader();
     this.setState({ friends: friends });
   };
 
   setError = error => {
-    this.stopLoader();
     this.setState({ error: error });
   };
 
@@ -59,7 +71,7 @@ class App extends Component {
     return (
       <StyledEnvContainer>
         <Message error={this.state.error} loading={this.state.loading} />
-        <Form />
+        <Form postFriends={this.postFriends} />
         <Friends friends={this.state.friends} />
       </StyledEnvContainer>
     );
