@@ -2,8 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+//COMPONENTS IMPORT
+import UpdateFrom from './UpdateForm';
+
+//STYLED COMPONENTS
 const StyledFriends = styled.div`
-  width: 50vw;
+  width: 80vw;
   border-radius: 10px;
   background-color: white;
   display: flex;
@@ -21,7 +25,7 @@ const StyledFriend = styled.div`
   color: white;
   padding: 10px;
   margin: 10px;
-  width: 20vw;
+  width: 35vw;
 
   .name {
     font-size: 1.3rem;
@@ -34,8 +38,8 @@ const StyledFriend = styled.div`
     background-color: white;
     color: #ff9966;
     cursor: pointer;
-    font-size: 0.7rem;
-    padding: 3px 7px;
+    font-size: 0.8rem;
+    padding: 3px 10px;
     font-weight: bold;
     border: none;
     margin: 10px 5px 5px 5px;
@@ -43,25 +47,29 @@ const StyledFriend = styled.div`
   }
 `;
 
+//EXPORT DEFAULT CLASS
 export default class Friends extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      formShow: false,
+      shouldFormShow: false,
       friendIdToShowForm: null
     };
   }
+  //SET UP SHOWING OF FORM WHEN CLICKED ON UPDATE
   showForm = (bool, id) => {
     this.setState({
-      showMessage: bool,
+      shouldFormShow: bool,
       friendIdToShowForm: id
     });
   };
 
+  //INPUT REFS
   inputRefName = React.createRef();
   inputRefAge = React.createRef();
   inputRefEmail = React.createRef();
 
+  //RENDER
   render() {
     return (
       this.props.friends && (
@@ -72,6 +80,8 @@ export default class Friends extends React.Component {
                 <div className="name">{friend.name}</div>
                 <div>Age: {friend.age}</div>
                 <div>Email: {friend.email}</div>
+
+                {/*DELETE BUTTON - DELETE ON  CLICK*/}
                 <button
                   onClick={event => {
                     this.props.deleteFriends(friend.id);
@@ -79,33 +89,12 @@ export default class Friends extends React.Component {
                   className="action-button">
                   Delete
                 </button>
+
+                {/*UPDATE BUTTON - IF CLICKED, UPDATE FORM APPEARS*/}
                 <button onClick={() => this.showForm(true, friend.id)} className="action-button">
                   Update
                 </button>
-                {this.state.showMessage && friend.id === this.state.friendIdToShowForm && (
-                  <form>
-                    Name: <input type="text" placeholder={friend.name} ref={this.inputRefName} />
-                    <br />
-                    Age: <input type="number" placeholder={friend.age} ref={this.inputRefAge} />
-                    <br />
-                    Email: <input type="email" placeholder={friend.email} ref={this.inputRefEmail} />
-                    <br />
-                    <input
-                      className="submit-button"
-                      type="submit"
-                      onClick={event => {
-                        event.preventDefault();
-                        const id = friend.id;
-                        const name = this.inputRefName.current.value;
-                        const age = this.inputRefAge.current.value;
-                        const email = this.inputRefEmail.current.value;
-
-                        this.props.putFriends(id, name, age, email);
-                        this.showForm(false, friend.id);
-                      }}
-                    />
-                  </form>
-                )}
+                {this.state.shouldFormShow && friend.id === this.state.friendIdToShowForm && <UpdateFrom friend={friend} putFriends={this.props.putFriends} showForm={this.showForm} />}
               </StyledFriend>
             );
           })}

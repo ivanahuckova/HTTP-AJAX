@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import './App.css';
 import styled from 'styled-components';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
+//CSS IMPORTS
+import './App.css';
+
+//COMPONENTS IMPORT
 import Friends from './components/Friends';
 import AddForm from './components/AddForm';
 import Message from './components/Message';
 
+//STYLED COMPONENTS
 const StyledEnvContainer = styled.div`
   width: 100vw;
   min-height: 100vh;
@@ -21,9 +25,11 @@ const StyledEnvContainer = styled.div`
   font-family: Arial, Helvetica, sans-serif;
 `;
 
+//URL TO DATA
 const friendsURL = 'http://localhost:5000/friends';
 
-class App extends Component {
+//EXPORT DEFAULT CLASS
+export default class App extends Component {
   state = {
     friends: null,
     error: null,
@@ -36,7 +42,6 @@ class App extends Component {
   }
 
   //GET/POST/UPDATE/DELETE REQUESTS
-
   fetchFriends = () => {
     this.resetError();
     this.startLoader();
@@ -93,6 +98,7 @@ class App extends Component {
     this.setState({ message: message });
   };
 
+  //START-STOP LOADER
   startLoader = () => {
     this.setState({ loading: true });
   };
@@ -100,6 +106,8 @@ class App extends Component {
   stopLoader = () => {
     this.setState({ loading: false });
   };
+
+  //RENDER
   render() {
     return (
       <StyledEnvContainer>
@@ -119,5 +127,3 @@ App.propTypes = {
     email: PropTypes.string
   })
 };
-
-export default App;
