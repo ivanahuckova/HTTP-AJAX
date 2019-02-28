@@ -38,7 +38,6 @@ export default class Form extends React.Component {
             className="submit-button"
             onClick={event => {
               event.preventDefault();
-
               const name = this.inputRefName.current.value;
               const age = this.inputRefAge.current.value;
               const email = this.inputRefEmail.current.value;

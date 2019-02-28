@@ -36,7 +36,7 @@ export default function Friends(props) {
       <StyledFriends>
         {props.friends.map(friend => {
           return (
-            <StyledFriend key={friend.name}>
+            <StyledFriend key={friend.id}>
               <div className="name">{friend.name}</div>
               <div>Age: {friend.age}</div>
               <div>Email: {friend.email}</div>
